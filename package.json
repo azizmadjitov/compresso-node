@@ -1,0 +1,54 @@
+{
+  "name": "compresso-api",
+  "version": "0.1.0",
+  "description": "Node.js client for the Compresso image compression API: one request returns the compressed PNG, JPEG or WebP.",
+  "keywords": [
+    "image-compression",
+    "compress-images",
+    "png",
+    "jpeg",
+    "webp",
+    "image-optimization",
+    "api-client",
+    "compresso"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "bin": {
+    "compresso": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "node --test test/*.test.ts",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "prepublishOnly": "npm run test && npm run build"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.4",
+    "typescript": "^5.6.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/USERNAME/compresso-node.git"
+  },
+  "homepage": "https://compresso.space/developers",
+  "bugs": {
+    "url": "https://github.com/USERNAME/compresso-node/issues"
+  }
+}
