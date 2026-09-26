@@ -26,7 +26,7 @@
     }
   },
   "bin": {
-    "compresso": "./dist/cli.js"
+    "compresso": "dist/cli.js"
   },
   "files": [
     "dist",
