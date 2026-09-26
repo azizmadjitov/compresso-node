@@ -45,10 +45,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/USERNAME/compresso-node.git"
+    "url": "git+https://github.com/azizmadjitov/compresso-node.git"
   },
   "homepage": "https://compresso.space/developers",
   "bugs": {
-    "url": "https://github.com/USERNAME/compresso-node/issues"
+    "url": "https://github.com/azizmadjitov/compresso-node/issues"
   }
 }
