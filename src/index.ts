@@ -123,7 +123,10 @@ export class Compresso {
     this.#maxRetries = options.maxRetries ?? 2
     this.#maxRetryDelayMs = options.maxRetryDelayMs ?? 60_000
     this.#timeoutMs = options.timeoutMs ?? 120_000
-    this.#fetch = options.fetch ?? globalThis.fetch
+    // Browsers require fetch to run with the global object as its receiver and
+    // throw "Illegal invocation" otherwise, so the default is wrapped rather
+    // than stored as a method of this client.
+    this.#fetch = options.fetch ?? ((input, init) => globalThis.fetch(input, init))
   }
 
   /** Compress raw image bytes. Resolves with the compressed image. */
@@ -178,7 +181,9 @@ export class Compresso {
     for (;;) {
       let res: Response
       try {
-        res = await this.#fetch(`${this.baseUrl}${path}`, {
+        // Called detached, so a caller's own window.fetch works too.
+        const request = this.#fetch
+        res = await request(`${this.baseUrl}${path}`, {
           method: body ? "POST" : "GET",
           headers: {
             Authorization: `Bearer ${this.#apiKey}`,

@@ -1,6 +1,6 @@
 {
   "name": "compresso-api",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Node.js client for the Compresso image compression API: one request returns the compressed PNG, JPEG or WebP.",
   "keywords": [
     "image-compression",

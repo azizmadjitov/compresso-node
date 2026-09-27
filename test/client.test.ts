@@ -151,3 +151,27 @@ test("empty input is rejected locally", async () => {
   })
   await assert.rejects(() => client.compress(new Uint8Array()), /empty/)
 })
+
+test("the default fetch is called the way browsers require", async () => {
+  // Browsers throw "Illegal invocation" when fetch runs with a foreign receiver,
+  // for example as a method of the client object. Node does not care, so this
+  // stand-in enforces the browser rule.
+  const original = globalThis.fetch
+  globalThis.fetch = function (this: unknown, ..._args: Parameters<typeof fetch>) {
+    if (this !== undefined && this !== globalThis) {
+      throw new TypeError("Failed to execute 'fetch' on 'Window': Illegal invocation")
+    }
+    return Promise.resolve(
+      new Response(JSON.stringify({ ok: true, plan: "free", compression_count: 1, compression_limit: 100 }), {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      })
+    )
+  } as typeof fetch
+  try {
+    const usage = await new Compresso({ apiKey: KEY }).usage()
+    assert.equal(usage.compressionCount, 1)
+  } finally {
+    globalThis.fetch = original
+  }
+})
